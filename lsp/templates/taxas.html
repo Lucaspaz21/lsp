@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+{% include 'navbar.html' %}
+
+ <style>
+    /* Estilos gerais */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #333;
+        text-align: center;
+    }
+
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    .teste{
+        margin-left: 300px
+    }
+
+    .custom-th,
+    .custom-td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .custom-th {
+        background-color: #f2f2f2;
+    }
+
+    .custom-container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    /* Estilos para dispositivos móveis */
+    @media (max-width: 768px) {
+        .custom-container {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .teste {
+            margin-left: 0;
+        }
+
+        .custom-table {
+            max-width: 400px; /* Ajuste o valor conforme necessário */
+            margin: 20px auto; /* Centraliza a tabela na página */
+        }
+    }
+</style>
+
+    <h1>Calculadora de Taxas</h1>
+    <div class="teste">
+    <form action="/taxas" method="post">
+        <label for="valor">Valor:</label>
+        <input type="text" id="valor" name="valor">
+        <button type="submit">Calcular</button>
+    </form>
+
+    <div class="custom-container">
+          <table class="custom-table">
+            <caption>Ton</caption>
+            <thead>
+            <tr>
+                <th class="custom-th">Ton</th>
+                <th class="custom-th">Valor Final</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="custom-td">Débito</td>
+                <td class="custom-td">{{ ton_debito_pagamento }}</td>
+            </tr>
+            <tr>
+                <td class="custom-td">Crédito</td>
+                <td class="custom-td">{{ ton_credito_pagamento }}</td>
+            </tr>
+            <tr>
+                <td class="custom-td">Crédito 2x</td>
+                <td class="custom-td">{{ ton_credito_2x_pagamento }}</td>
+            </tr>
+            <tr>
+                <td class="custom-td">Crédito 3x</td>
+                <td class="custom-td">{{ ton_credito_3x_pagamento }}</td>
+            </tr>
+            <tr>
+                <td class="custom-td">Crédito 4x</td>
+                <td class="custom-td">{{ ton_credito_3x_pagamento }}</td>
+            </tr>
+            <tr>
+                <td class="custom-td">Crédito 5x</td>
+                <td class="custom-td">{{ ton_credito_3x_pagamento }}</td>
+            </tr>
+            <tr>
+                <td class="custom-td">Crédito 6x</td>
+                <td class="custom-td">{{ ton_credito_3x_pagamento }}</td>
+            </tr>
+            <tr>
+                <td class="custom-td">Crédito 7x</td>
+                <td class="custom-td">{{ ton_credito_3x_pagamento }}</td>
+            </tr>
+            <tr>
+                <td class="custom-td">Crédito 8x</td>
+                <td class="custom-td">{{ ton_credito_8x_pagamento }}</td>
+            </tr>
+            <tr>
+                <td class="custom-td">Crédito 9x</td>
+                <td class="custom-td">{{ ton_credito_9x_pagamento }}</td>
+            </tr>
+            <tr>
+                <td class="custom-td">Crédito 10x</td>
+                <td class="custom-td">{{ ton_credito_10x_pagamento }}</td>
+            </tr>
+            <tr>
+                <td class="custom-td">Crédito 11x</td>
+                <td class="custom-td">{{ ton_credito_11x_pagamento }}</td>
+            </tr>
+            <tr>
+                <td class="custom-td">Crédito 12x</td>
+                <td class="custom-td">{{ ton_credito_12x_pagamento }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table class="custom-table">
+            <caption>Cielo</caption>
+            <thead>
+            <tr>
+                <th class="custom-th">Cielo</th>
+                <th class="custom-th">Valor Final</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="custom-td">Débito</td>
+                <td class="custom-td">{{ cielo_debito_pagamento }}</td>
+            </tr>
+            <tr>
+                <td class="custom-td">Crédito</td>
+                <td class="custom-td">{{ cielo_credito_pagamento }}</td>
+            </tr>
+            <tr>
+                <td class="custom-td">Crédito 2x</td>
+                <td class="custom-td">{{ cielo_credito_2x_pagamento }}</td>
+            </tr>
+            <tr>
+                <td class="custom-td">Crédito 3x</td>
+                <td class="custom-td">{{ cielo_credito_3x_pagamento }}</td>
+            </tr>
+            <tr>
+                <td class="custom-td">Crédito 4x</td>
+                <td class="custom-td">{{ cielo_credito_3x_pagamento }}</td>
+            </tr>
+            <tr>
+                <td class="custom-td">Crédito 5x</td>
+                <td class="custom-td">{{ cielo_credito_3x_pagamento }}</td>
+            </tr>
+            <tr>
+                <td class="custom-td">Crédito 6x</td>
+                <td class="custom-td">{{ cielo_credito_3x_pagamento }}</td>
+            </tr>
+            <tr>
+                <td class="custom-td">Crédito 7x</td>
+                <td class="custom-td">{{ cielo_credito_3x_pagamento }}</td>
+            </tr>
+            <tr>
+                <td class="custom-td">Crédito 8x</td>
+                <td class="custom-td">{{ cielo_credito_8x_pagamento }}</td>
+            </tr>
+            <tr>
+                <td class="custom-td">Crédito 9x</td>
+                <td class="custom-td">{{ cielo_credito_9x_pagamento }}</td>
+            </tr>
+            <tr>
+                <td class="custom-td">Crédito 10x</td>
+                <td class="custom-td">{{ cielo_credito_10x_pagamento }}</td>
+            </tr>
+            <tr>
+                <td class="custom-td">Crédito 11x</td>
+                <td class="custom-td">{{ cielo_credito_11x_pagamento }}</td>
+            </tr>
+            <tr>
+                <td class="custom-td">Crédito 12x</td>
+                <td class="custom-td">{{ cielo_credito_12x_pagamento }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+
+{% endblock %}

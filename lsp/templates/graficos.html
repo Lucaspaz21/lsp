@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            /* Adicione um espaçamento no topo da página para evitar sobreposição com a navbar vertical */
+            margin-top: 60px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 40px;
+        }
+        .chart-container {
+            /* Altere flex-wrap para nowrap e remova align-items */
+            display: flex;
+            flex-wrap: nowrap;
+            /* Centralize os elementos horizontalmente */
+            justify-content: center;
+            /* Adicione uma margem no topo da div para ajustar o posicionamento dos gráficos */
+            margin-top: 20px;
+            margin-left: 200px;
+        }
+
+        .chart-container img {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Defina uma largura máxima para os gráficos */
+            max-width: 1000px;
+            width: 100%;
+            margin: 10px; /* Espaçamento entre os gráficos */
+        }
+
+        .chart-container img:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .chart-container .chart-label {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+         /* Estilos para dispositivos móveis */
+    @media (max-width: 768px) {
+        .chart-container {
+            /* Altere flex-wrap para nowrap e remova align-items */
+            display: flex;
+            flex-wrap: nowrap;
+            /* Centralize os elementos horizontalmente */
+            justify-content: center;
+            /* Adicione uma margem no topo da div para ajustar o posicionamento dos gráficos */
+            margin-top: 20px;
+            margin-left: 0px;
+        }
+        }
+    }
+    </style>
+</head>
+<body>
+
+    <div class="chart-container">
+        <div>
+            <img src="{{ url_for('static', filename='images/grafico.png') }}" alt="Dados Gerais">
+
+        </div>
+    </div>
+    <div class="chart-container">
+        <div>
+            <img src="{{ url_for('static', filename='images/grafico_entradas.png') }}" alt="Dados de Entradas">
+            <div class="chart-label"></div>
+        </div>
+    </div>
+    <div class="chart-container">
+        <div>
+            <img src="{{ url_for('static', filename='images/grafico_saidas.png') }}" alt="Dados de Saídas">
+            <div class="chart-label"></div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+  {% include 'navbar.html' %}
+
+ <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+
+    .custom-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-left: 300px
+    }
+
+    .custom-search-form {
+      margin-bottom: 20px;
+    }
+
+    .custom-search-input {
+      margin-right: 10px;
+      padding: 5px;
+    }
+
+    .custom-search-button {
+      padding: 5px 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .custom-th,
+    .custom-td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .custom-th {
+      background-color: #f2f2f2;
+    }
+
+    .custom-tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    /* Estilos para dispositivos móveis */
+    @media (max-width: 768px) {
+        .custom-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-left: 100px
+      }
+        .body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      padding: 30px;
+    }
+
+        }
+  </style>
+<head>
+    <title>Produtos</title>
+  </head>
+
+  <body>
+    <div class="custom-container">
+      <h1 class="h2">Produtos</h1>
+      <div class="d-flex custom-search-form">
+        <form class="d-flex" method="get">
+          <input class="form-control custom-search-input" type="search" placeholder="Search Produto" aria-label="Search" name="Produto">
+          <input class="form-control custom-search-input" type="search" placeholder="Search Código" aria-label="Search" name="Código">
+          <button class="btn custom-search-button" type="submit">Search</button>
+        </form>
+      </div>
+      <div>
+        <table class="table custom-table">
+          <thead>
+            <tr>
+            {% for col in obj['columns'] %}
+              <th scope="col" class="custom-th">{{col}}</th>
+            {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for produto in obj['data'] %}
+            <tr class="custom-tr">
+              <td class="custom-td">{{ '{:.0f}'.format(produto[0]) }}</td>
+              <td class="custom-td">{{produto[1]}}</td>
+              <td class="custom-td">{{ 'R$ {:.2f}'.format(produto[2]) }}</td>
+              <td class="custom-td">{{ 'R$ {:.2f}'.format(produto[3]) }}</td>
+              <td class="custom-td">{{ 'R$ {:.2f}'.format(produto[4]) }}</td>
+              {% if codigo %}
+                <td class="custom-td">{{produto[5]}}</td>
+              {% endif %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  {% endblock %}
