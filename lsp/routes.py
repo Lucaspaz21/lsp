@@ -244,7 +244,7 @@ def produtos():
 
     return render_template('produtos.html', obj=obj, produto=produto, codigo=codigo)
 
-@app.route('/3rD6p--taxas--A9yN0uS', methods=['GET', 'POST'])
+@app.route('/taxas', methods=['GET', 'POST'])
 def caltaxas():
     if request.method == 'POST':
         valor_str = request.form['valor']
