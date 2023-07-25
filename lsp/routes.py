@@ -7,9 +7,15 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib
 from decimal import Decimal, InvalidOperation
+import smtplib
+import email.message
+from datetime import date
 matplotlib.use('Agg')
 
 user, passw = 'lsp', 'lsp'
+
+def moeda(n=0, moeda='R$'):
+    return f'{moeda}{n:.2f}'.replace('.', ',')
 
 def tratardados():
     caminho = r'lsp/static/files/Vendas_3.1.xlsm'
@@ -179,6 +185,151 @@ def taxas(valor):
            cielo_credito_10x_pagamento, cielo_credito_11x_pagamento, cielo_credito_12x_pagamento
 
 
+def relatorios_semanal():
+    caminho = r'lsp/static/files/Vendas_3.1.xlsm'
+    try:
+        tabela = pd.read_excel(caminho, sheet_name='Dados')
+        # tabela = pd.read_excel(r"C:\L da S Paz\Loja\Venda diarias v3.1/Vendas_3.1.xlsm", sheet_name='Dados')
+    except:
+        print('Erro ao abrir tabela')
+
+    try:
+        vendamensal = tabela.iloc[2, 1]
+        saidamensal = tabela.iloc[3, 1]
+        contasfuturas = tabela.iloc[1, 1]
+        saldoatual = vendamensal - saidamensal
+        dia = f'{date.today().day}/{date.today().month}/{date.today().year}'
+    except:
+        print('Falha ao importar dados para Relatório Semanal!')
+
+    def relatorio_semanal():
+        try:
+            def enviar_email():  # gilberto
+                corpo_email = f'''<h4>Prezados,</h4>
+
+                <p>Segue o Relatório de Vendas Mensal do dia <b>{dia}</b>:</p>
+                <br>
+                <p>Venda mensal até o momento: <b>{moeda(vendamensal)}</b>.</p>
+                <p>Saída mensal até o momento: <b>{moeda(saidamensal)}</b>.</p>
+                <p>Saldo mensal até o momento: <b>{moeda(saldoatual)}</b>.</p>
+                <p>Contas em aberto até o momento: <b>{moeda(contasfuturas)}</b>.</p>
+                <br>
+                <p><b>Att.,</b></p>
+                <p><b>Lucas Paz</b></p>
+                '''
+
+                msg = email.message.Message()
+                msg['Subject'] = f"Venda mensal - {dia}"
+                msg['From'] = 'lucas.paz12@gmail.com'
+                msg['To'] = 'gilbertomazetti@gmail.com'
+                password = 'hhevbfduxzqqyetd'
+                msg.add_header('Content-Type', 'text/html')
+                msg.set_payload(corpo_email)
+
+                s = smtplib.SMTP('smtp.gmail.com: 587')
+                s.starttls()
+                # Login Credentials for sending the mail
+                s.login(msg['From'], password)
+                s.sendmail(msg['From'], [msg['To']], msg.as_string().encode('utf-8'))
+                print('Email enviado para -> Gilberto Mazetti')
+            enviar_email()  # gilberto
+
+            def enviar_email1():  # loja
+                corpo_email = f'''<h4>Prezados,</h4>
+
+                <p>Segue o Relatório de Vendas Mensal do dia <b>{dia}</b>:</p>
+                <br>
+                <p>Venda mensal até o momento: <b>{moeda(vendamensal)}</b>.</p>
+                <p>Saída mensal até o momento: <b>{moeda(saidamensal)}</b>.</p>
+                <p>Saldo mensal até o momento: <b>{moeda(saldoatual)}</b>.</p>
+                <p>Contas em aberto até o momento: <b>{moeda(contasfuturas)}</b>.</p>
+                <br>
+                <p><b>Att.,</b></p>
+                <p><b>Lucas Paz</b></p>
+                '''
+
+                msg = email.message.Message()
+                msg['Subject'] = f"Venda mensal - {dia}"
+                msg['From'] = 'lucas.paz12@gmail.com'
+                msg['To'] = 'casadeconstrucaocarmo@gmail.com'
+                password = 'hhevbfduxzqqyetd'
+                msg.add_header('Content-Type', 'text/html')
+                msg.set_payload(corpo_email)
+
+                s = smtplib.SMTP('smtp.gmail.com: 587')
+                s.starttls()
+                # Login Credentials for sending the mail
+                s.login(msg['From'], password)
+                s.sendmail(msg['From'], [msg['To']], msg.as_string().encode('utf-8'))
+                print('Email enviado para -> L da S Paz Materiais de Construção')
+
+                # enviar_email1()  # loja
+            enviar_email1()
+
+            def enviar_email2():  # marcia
+                corpo_email = f'''<h4>Prezados,</h4>
+
+                <p>Segue o Relatório de Vendas Mensal do dia <b>{dia}</b>:</p>
+                <br>
+                <p>Venda mensal até o momento: <b>{moeda(vendamensal)}</b>.</p>
+                <p>Saída mensal até o momento: <b>{moeda(saidamensal)}</b>.</p>
+                <p>Saldo mensal até o momento: <b>{moeda(saldoatual)}</b>.</p>
+                <p>Contas em aberto até o momento: <b>{moeda(contasfuturas)}</b>.</p>
+                <br>
+                <p><b>Att.,</b></p>
+                <p><b>Lucas Paz</b></p>
+                '''
+
+                msg = email.message.Message()
+                msg['Subject'] = f"Venda mensal - {dia}"
+                msg['From'] = 'lucas.paz12@gmail.com'
+                msg['To'] = 'cscleidemarcia@gmail.com'
+                password = 'hhevbfduxzqqyetd'
+                msg.add_header('Content-Type', 'text/html')
+                msg.set_payload(corpo_email)
+
+                s = smtplib.SMTP('smtp.gmail.com: 587')
+                s.starttls()
+                # Login Credentials for sending the mail
+                s.login(msg['From'], password)
+                s.sendmail(msg['From'], [msg['To']], msg.as_string().encode('utf-8'))
+                print('Email enviado para -> Cleide Marcia')
+            enviar_email2()  # marcia
+
+            def enviar_email3():  # lucas
+                corpo_email = f'''<h4>Prezados,</h4>
+
+                <p>Segue o Relatório de Vendas Mensal do dia <b>{dia}</b>:</p>
+                <br>
+                <p>Venda mensal até o momento: <b>{moeda(vendamensal)}</b>.</p>
+                <p>Saída mensal até o momento: <b>{moeda(saidamensal)}</b>.</p>
+                <p>Saldo mensal até o momento: <b>{moeda(saldoatual)}</b>.</p>
+                <p>Contas em aberto até o momento: <b>{moeda(contasfuturas)}</b>.</p>
+                <br>
+                <p><b>Att.,</b></p>
+                <p><b>Lucas Paz</b></p>
+                '''
+
+                msg = email.message.Message()
+                msg['Subject'] = f"Venda mensal - {dia}"
+                msg['From'] = 'lucas.paz12@gmail.com'
+                msg['To'] = 'lucas.paz12@gmail.com'
+                password = 'hhevbfduxzqqyetd'
+                msg.add_header('Content-Type', 'text/html')
+                msg.set_payload(corpo_email)
+
+                s = smtplib.SMTP('smtp.gmail.com: 587')
+                s.starttls()
+                # Login Credentials for sending the mail
+                s.login(msg['From'], password)
+                s.sendmail(msg['From'], [msg['To']], msg.as_string().encode('utf-8'))
+                print('Email enviado para -> Lucas Paz')
+            enviar_email3()  # lucas
+        except:
+            print('Erro ao enviar email!')
+
+    relatorio_semanal()
+
 @app.route('/9Y5h2--home-D6f7R1A')
 def home():
     tratardados()
@@ -279,3 +430,21 @@ def caltaxas():
                                cielo_credito_12x_pagamento=pagamentos[25])
 
     return render_template('taxas.html')
+
+@app.route('/relatorios', methods=['GET', 'POST'])
+def relatorios():
+    button_pressed = None
+    if request.method == 'POST':
+        button_pressed = request.form.get('button')
+
+    if button_pressed == 'relatorio_mensal':
+        # Chamar a função do Relatório Mensal
+        # Por exemplo: resultado = funcao_relatorio_mensal()
+        # return resultado
+        return "Relatório Mensal"
+
+    elif button_pressed == 'relatorio_semanal':
+        relatorios_semanal()
+        return redirect(url_for('home'))
+        # return resultado
+    return render_template('relatorios.html')
