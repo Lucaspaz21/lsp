@@ -540,11 +540,11 @@ def relatorios():
     if request.method == 'POST':
         button_pressed = request.form.get('button')
 
-    if button_pressed == 'relatorio_mensal':
-        # Chamar a função do Relatório Mensal
-        # Por exemplo: resultado = funcao_relatorio_mensal()
+        if button_pressed == 'relatorio_mensal':
+        relatorio_mensal()
         # return resultado
-        return "Relatório Mensal"
+        return redirect(url_for('home'))
+
 
     elif button_pressed == 'relatorio_semanal':
         relatorios_semanal()
