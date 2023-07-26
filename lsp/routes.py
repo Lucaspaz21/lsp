@@ -9,13 +9,108 @@ import matplotlib
 from decimal import Decimal, InvalidOperation
 import smtplib
 import email.message
-from datetime import date
+from datetime import date, datetime
+import docx
+from docx2pdf import convert
 matplotlib.use('Agg')
 
 user, passw = 'lsp', 'lsp'
 
 def moeda(n=0, moeda='R$'):
     return f'{moeda}{n:.2f}'.replace('.', ',')
+
+def relatorio_mensal():
+    atual = datetime.now()
+    dia = atual.strftime("%d/%m/%Y")
+    try:
+        caminho = r'lsp/static/files/Vendas_3.1.xlsm'
+        base_rela_mensal = pd.read_excel(caminho, sheet_name='Dados')
+    except:
+        erro_rela_mensal = 'Não foi possivel obter a base'
+        print(erro_rela_mensal)
+
+    try:
+        # selecionar dados
+        vendamensal = base_rela_mensal.iloc[2, 1]
+        saidamensal = base_rela_mensal.iloc[3, 1]
+        saldo = vendamensal - saidamensal
+        combustivel = base_rela_mensal.iloc[4, 1]
+        loja = base_rela_mensal.iloc[5, 1]
+        basico = base_rela_mensal.iloc[6, 1]
+        sistema = base_rela_mensal.iloc[8, 1]
+        outros = base_rela_mensal.iloc[8, 1]
+        contasfuturas = base_rela_mensal.iloc[1, 1]
+
+        debito = base_rela_mensal.iloc[9, 1]
+        credito = base_rela_mensal.iloc[10, 1]
+        dinheiro = base_rela_mensal.iloc[11, 1]
+        parcelado = base_rela_mensal.iloc[12, 1]
+        pix = base_rela_mensal.iloc[13, 1]
+        cheque = base_rela_mensal.iloc[14, 1]
+
+        # dados de porcentagem
+        dados_loja = float((loja / saidamensal) * 100)
+        dados_basico = (basico / saidamensal) * 100
+        dados_sistema = (sistema / saidamensal) * 100
+        dados_outros = (outros / saidamensal) * 100
+        dados_combustivel = (combustivel / saidamensal) * 100
+
+        dados_debito = (debito / vendamensal) * 100
+        dados_credito = (credito / vendamensal) * 100
+        dados_pix = (pix / vendamensal) * 100
+        dados_cheque = (cheque / vendamensal) * 100
+        dados_dinheiro = (dinheiro / vendamensal) * 100
+        dados_parcelado = (parcelado / vendamensal) * 100
+    except:
+        erro_importar_infor_rela = 'ERRO ao importar dados para Relatório Mensal!'
+        print(erro_importar_infor_rela)
+
+
+    # criando arquivo Word
+    documento = docx.Document()
+    documento.add_heading(f"Relatório Mensal - {dia}", 0)
+    documento.add_paragraph(f"Relatório gerado automaticamente com base nos dados lançados no sistema.")
+    documento.add_heading("Dados gerais do mês.", 3)
+    documento.add_paragraph(f"Venda mensal no valor de {moeda(vendamensal)}.")
+    documento.add_paragraph(f"Saida mensal no valor de {moeda(saidamensal)}.")
+    documento.add_paragraph(f"Saldo mensal no valor de {moeda(saldo)}.")
+    documento.add_paragraph(f"Contas futuras em aberto no valor de {moeda(contasfuturas)}.")
+    documento.add_paragraph("------------------------------------------------------------------------")
+    # detalhes despesas do mes
+    documento.add_heading("Detalhes de despesas do mês.", 3)
+    documento.add_paragraph(f"Gasto em combustível: {moeda(combustivel)}.")
+    documento.add_paragraph(f"Gasto de sistema da loja (salarios, impostos, aluguel etc): {moeda(sistema)}.")
+    documento.add_paragraph(f"Outros gastos para fins não planejados: {moeda(outros)}.")
+    documento.add_paragraph(f"Gastos com produtos básicos (cimento, areia, pedra): {moeda(basico)}.")
+    documento.add_paragraph(f"Gastos com produtos não básicos: {moeda(loja)}.")
+    # estatísticas do mes
+    documento.add_heading("Estatísticas de despesas.", 3)
+    documento.add_paragraph(f"Produtos considerados de loja obtiveram um valor de"
+                            f" {dados_loja:.2f}% da Saida Mensal, enquanto que Produtos"
+                            f" considerados Básicos ficaram em {dados_basico:.2f}% da Saída Mensal.")
+    documento.add_paragraph(
+        f"Os gastos que envolvem salários, aluguel e impostos tiveram porcentagem de {dados_sistema:.2f}%, "
+        f" gastos não planejados ficaram em {dados_outros:.2f}%.")
+    documento.add_paragraph(f"O gasto em combustível é referente a {dados_combustivel:.2f}% da Saída Mensal.")
+    documento.add_paragraph("------------------------------------------------------------------------")
+
+    # detalhe sobre formas de entrada
+    documento.add_heading("Estatísticas de entradas.", 3)
+    documento.add_paragraph(f"Entrada em Dinheiro: {moeda(dinheiro)}, equivalente a {dados_dinheiro:.2f}%.")
+    documento.add_paragraph(f"Entrada em Débito: {moeda(debito)}, equivalente a {dados_debito:.2f}%. ")
+    documento.add_paragraph(f"PIX: {moeda(pix)}, equivalente a {dados_pix:.2f}%.")
+    documento.add_paragraph(
+        f"Entrada em Crédito: R${moeda(credito)}, eqivalente a {dados_credito:.2f}%, Crédito Parcelado: {moeda(parcelado)},"
+        f" equivalente a {dados_parcelado:.2f}%, Cheque: {moeda(dados_cheque)}.")
+    documento.add_paragraph(f"Arquivo gerado em {dia}.")
+    # salvar arquivo
+    dia1 = atual.strftime("%d-%m-%Y")
+    nome = f'Relatório Mensal - {dia1}.docx'
+    documento.save(f"lsp/static/files/relatorios/{nome}")
+    caminho_pdf = f"lsp/static/files/relatorios/Relatório_Mensal_{dia1}.pdf"
+    convert(f"lsp/static/files/relatorios/{nome}", caminho_pdf)
+
+
 
 def tratardados():
     caminho = r'lsp/static/files/Vendas_3.1.xlsm'
@@ -183,6 +278,14 @@ def taxas(valor):
            ton_credito_10x_pagamento, ton_credito_11x_pagamento, ton_credito_12x_pagamento, cielo_debito_pagamento,  cielo_credito_pagamento, cielo_credito_2x_pagamento, cielo_credito_3x_pagamento, cielo_credito_4x_pagamento,\
            cielo_credito_5x_pagamento, cielo_credito_6x_pagamento, cielo_credito_7x_pagamento, cielo_credito_8x_pagamento, cielo_credito_9x_pagamento,\
            cielo_credito_10x_pagamento, cielo_credito_11x_pagamento, cielo_credito_12x_pagamento
+
+@app.route('/mostrar_arquivos')
+def mostrar_arquivos():
+    pasta = 'lsp/static/files/relatorios'  # Substitua 'pasta_desejada' pelo caminho da pasta que você quer mostrar os arquivos
+    arquivos = os.listdir(pasta)
+    caminhos_arquivos = [os.path.join(pasta, arquivo) for arquivo in arquivos]
+    print(arquivos)
+    return render_template('relatorio_mensal.html', arquivos=arquivos, caminhos_arquivos=caminhos_arquivos)
 
 
 def relatorios_semanal():
