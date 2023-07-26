@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+    {% include 'navbar.html' %}
+
+    <h1 class="mt-5">Relatórios Mensais:</h1>
+
+    <ul>
+        {% for i in range(arquivos|length) %}
+        <li><a class="btn btn-dark btn-lg mt-2" href="/static/files/relatorios/{{ arquivos[i] }}" target="_blank">{{ arquivos[i] }}</a></li>
+        {% endfor %}
+    </ul>
+
+
+{% endblock %}
