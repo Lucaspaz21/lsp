@@ -110,8 +110,6 @@ def relatorio_mensal():
     caminho_pdf = f"lsp/static/files/relatorios/Relatório_Mensal_{dia1}.pdf"
     convert(f"lsp/static/files/relatorios/{nome}", caminho_pdf)
 
-
-
 def tratardados():
     caminho = r'lsp/static/files/Vendas_3.1.xlsm'
     arquivo = pd.read_excel(caminho, sheet_name='Dados')
@@ -279,15 +277,6 @@ def taxas(valor):
            cielo_credito_5x_pagamento, cielo_credito_6x_pagamento, cielo_credito_7x_pagamento, cielo_credito_8x_pagamento, cielo_credito_9x_pagamento,\
            cielo_credito_10x_pagamento, cielo_credito_11x_pagamento, cielo_credito_12x_pagamento
 
-@app.route('/mostrar_arquivos')
-def mostrar_arquivos():
-    pasta = 'lsp/static/files/relatorios'  # Substitua 'pasta_desejada' pelo caminho da pasta que você quer mostrar os arquivos
-    arquivos = os.listdir(pasta)
-    caminhos_arquivos = [os.path.join(pasta, arquivo) for arquivo in arquivos]
-    print(arquivos)
-    return render_template('relatorio_mensal.html', arquivos=arquivos, caminhos_arquivos=caminhos_arquivos)
-
-
 def relatorios_semanal():
     caminho = r'lsp/static/files/Vendas_3.1.xlsm'
     try:
@@ -433,6 +422,7 @@ def relatorios_semanal():
 
     relatorio_semanal()
 
+
 @app.route('/9Y5h2--home-D6f7R1A')
 def home():
     tratardados()
@@ -534,17 +524,24 @@ def caltaxas():
 
     return render_template('taxas.html')
 
+@app.route('/mostrar_arquivos')
+def mostrar_arquivos():
+    pasta = 'lsp/static/files/relatorios'  # Substitua 'pasta_desejada' pelo caminho da pasta que você quer mostrar os arquivos
+    arquivos = os.listdir(pasta)
+    caminhos_arquivos = [os.path.join(pasta, arquivo) for arquivo in arquivos]
+    print(arquivos)
+    return render_template('relatorio_mensal.html', arquivos=arquivos, caminhos_arquivos=caminhos_arquivos)
+
 @app.route('/relatorios', methods=['GET', 'POST'])
 def relatorios():
     button_pressed = None
     if request.method == 'POST':
         button_pressed = request.form.get('button')
 
-        if button_pressed == 'relatorio_mensal':
+    if button_pressed == 'relatorio_mensal':
         relatorio_mensal()
         # return resultado
         return redirect(url_for('home'))
-
 
     elif button_pressed == 'relatorio_semanal':
         relatorios_semanal()
