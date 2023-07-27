@@ -524,9 +524,9 @@ def caltaxas():
 
     return render_template('taxas.html')
 
-@app.route('/mostrar_arquivos')
+@app.route('/arquivos')
 def mostrar_arquivos():
-    pasta = 'lsp/static/files/relatorios'  # Substitua 'pasta_desejada' pelo caminho da pasta que você quer mostrar os arquivos
+    pasta = 'lsp/static/files/relatorios'  
     arquivos = os.listdir(pasta)
     caminhos_arquivos = [os.path.join(pasta, arquivo) for arquivo in arquivos]
     print(arquivos)
