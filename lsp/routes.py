@@ -546,3 +546,19 @@ def relatorios():
         return redirect(url_for('home'))
         # return resultado
     return render_template('relatorios.html')
+
+@app.route('/excluir_relatorio/<string:nome_arquivo>')
+def excluir_relatorio(nome_arquivo):
+    try:
+        # Verifique se o arquivo existe antes de excluí-lo
+        caminho_arquivo = os.path.join('lsp/static/files/relatorios', nome_arquivo)
+        if os.path.exists(caminho_arquivo):
+            os.remove(caminho_arquivo)
+            print(f'O arquivo {nome_arquivo} foi excluído com sucesso!')
+        else:
+            print(f'O arquivo {nome_arquivo} não existe ou já foi excluído anteriormente.')
+    except Exception as e:
+        print(f'Erro ao excluir o arquivo {nome_arquivo}: {e}')
+
+    # Após excluir o arquivo, você pode redirecionar o usuário para a página de relatórios novamente
+    return redirect(url_for('home'))
