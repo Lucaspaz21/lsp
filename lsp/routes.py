@@ -106,10 +106,7 @@ def relatorio_mensal():
     # salvar arquivo
     dia1 = atual.strftime("%d-%m-%Y")
     nome = f'Relatório Mensal - {dia1}.docx'
-    nomepdf = f'Relatório Mensal - {dia1}.pdf'
     documento.save(f"lsp/static/files/relatorios/{nome}")
-    caminho_pdf = f"lsp/static/files/relatorios/{nomepdf}"
-    convert(f"lsp/static/files/relatorios/{nome}", caminho_pdf)
 
 def tratardados():
     caminho = r'lsp/static/files/Vendas_3.1.xlsm'
