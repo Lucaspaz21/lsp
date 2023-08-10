@@ -104,9 +104,22 @@ def relatorio_mensal():
         f" equivalente a {dados_parcelado:.2f}%, Cheque: {moeda(dados_cheque)}.")
     documento.add_paragraph(f"Arquivo gerado em {dia}.")
     # salvar arquivo
-    dia1 = atual.strftime("%d-%m-%Y")
-    nome = f'Relatório Mensal - {dia1}.docx'
-    documento.save(f"lsp/static/files/relatorios/{nome}")
+    pasta_rela = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'rela')
+    if not os.path.exists(pasta_rela):
+        os.mkdir(pasta_rela)
+
+    try:
+        dia1 = atual.strftime("%d-%m-%Y")
+        nome = f'Relatório Mensal - {dia1}.docx'
+        caminho_salvar = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'rela', nome)
+        documento.save(caminho_salvar)
+    except:
+        erro = 'ERRO !'
+        print(erro)
+    # dia1 = atual.strftime("%d-%m-%Y")
+    # nome = f'Relatório Mensal - {dia1}.docx'
+    # nomepdf = f'Relatório Mensal - {dia1}.pdf'
+    # documento.save(f"lsp/static/files/relatorios/{nome}")
 
 def tratardados():
     caminho = r'lsp/static/files/Vendas_3.1.xlsm'
