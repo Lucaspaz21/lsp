@@ -537,7 +537,7 @@ def caltaxas():
 
 @app.route('/arquivos')
 def mostrar_arquivos():
-    pasta = 'lsp/static/files/relatorios'  
+    pasta = 'rela'  
     arquivos = os.listdir(pasta)
     caminhos_arquivos = [os.path.join(pasta, arquivo) for arquivo in arquivos]
     print(arquivos)
