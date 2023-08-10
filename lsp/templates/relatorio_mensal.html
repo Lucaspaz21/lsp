@@ -8,7 +8,7 @@
 
     <ul>
         {% for i in range(arquivos|length) %}
-        <li><a class="btn btn-dark btn-lg mt-2" href="/static/files/relatorios/{{ arquivos[i] }}" target="_blank">{{ arquivos[i] }}</a>
+        <li><a class="btn btn-dark btn-lg mt-2" href="rela/{{ arquivos[i] }}" target="_blank">{{ arquivos[i] }}</a>
         <a class="btn btn-danger btn-lg mt-2" href="{{ url_for('excluir_relatorio', nome_arquivo=arquivos[i]) }}">Excluir</a></li>
         {% endfor %}
     </ul>
