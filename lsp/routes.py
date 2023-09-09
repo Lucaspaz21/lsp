@@ -487,7 +487,7 @@ def produtos():
 
     return render_template('produtos.html', obj=obj, produto=produto, codigo=codigo)
 
-@app.route('1qW7hE--/taxas', methods=['GET', 'POST'])
+@app.route('/1qW7hE--taxas', methods=['GET', 'POST'])
 def caltaxas():
     if request.method == 'POST':
         valor_str = request.form['valor']
@@ -523,7 +523,7 @@ def caltaxas():
 
     return render_template('taxas.html')
 
-@app.route('7qW9hE--/arquivos')
+@app.route('/7qW9hE--arquivos')
 def mostrar_arquivos():
     pasta = 'lsp/static/files/relatorios'
     arquivos = os.listdir(pasta)
@@ -531,7 +531,7 @@ def mostrar_arquivos():
     print(arquivos)
     return render_template('relatorio_mensal.html', arquivos=arquivos, caminhos_arquivos=caminhos_arquivos)
 
-@app.route('4iW7t3--/relatorios', methods=['GET', 'POST'])
+@app.route('/4iW7t3--relatorios', methods=['GET', 'POST'])
 def relatorios():
     button_pressed = None
     if request.method == 'POST':
