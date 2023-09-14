@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    {% include 'navbar.html' %}
+
+    <form class="form-inline mt-2" method="POST">
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="exampleFormControlInput1">Bloco 8 Furos (9 x 19 x 19):</label>
+            <input type="number" class="form-control ml-3" name="area" placeholder="Área a ser calculada">
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Calcular</button>
+         {% if resultado_oito_pe is defined %}
+    <p class="ml-3">Sera usado uma media de {{ resultado_oito_pe }} blocos de 8 furos em pé ou {{ resultado_oito_deitado }} deitados.</p>
+    {% endif %}
+    </form>
+
+    <form class="form-inline mt-2" method="POST">
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="exampleFormControlInput2">Bloco 6 Furos (9 x 19 x 29):</label>
+            <input type="number" class="form-control ml-3" name="area1" placeholder="Área a ser calculada">
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Calcular</button>
+         {% if resultado_seis_furos_pe is defined %}
+    <p class="ml-3">Sera usado uma media de {{ resultado_seis_furos_pe }} blocos de 6 furos em pé ou {{ resultado_seis_furos_deitado }} deitados.</p>
+    {% endif %}
+    </form>
+
+    <form class="form-inline mt-2" method="POST">
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="exampleFormControlInput3">Tijolo Pó de Mico:</label>
+            <input type="number" class="form-control ml-3" name="area2" placeholder="Área a ser calculada">
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Calcular</button>
+         {% if resultado_tijolo is defined %}
+    <p class="ml-3">Sera usado uma media de {{ resultado_tijolo }} tijolos.</p>
+    {% endif %}
+    </form>
+
+{% endblock %}
+
+Invalid id reference
