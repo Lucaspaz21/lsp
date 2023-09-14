@@ -12,6 +12,7 @@ import email.message
 from datetime import date, datetime
 import docx
 from docx2pdf import convert
+from lsp import defs
 matplotlib.use('Agg')
 
 user, passw = 'lsp', 'lsp'
@@ -563,3 +564,23 @@ def excluir_relatorio(nome_arquivo):
 
     # Após excluir o arquivo, você pode redirecionar o usuário para a página de relatórios novamente
     return redirect(url_for('home'))
+
+@app.route('/7nL7hE--calculos', methods=['GET', 'POST'])
+def calculos():
+    if request.method == 'POST':
+        if 'area' in request.form:
+            area = float(request.form['area'])
+            resultado_oito_pe = defs.oito_furos_em_pe(area)
+            resultado_oito_deitado = defs.oito_furos_deitado(area)
+            return render_template('calculos.html', resultado_oito_pe=resultado_oito_pe, resultado_oito_deitado=resultado_oito_deitado)
+        elif 'area1' in request.form:
+            area1 = float(request.form['area1'])
+            resultado_seis_furos_pe = defs.seis_furos_em_pe(area1)
+            resultado_seis_furos_deitado = defs.seis_furos_deitado(area1)
+            return render_template('calculos.html', resultado_seis_furos_pe=resultado_seis_furos_pe, resultado_seis_furos_deitado=resultado_seis_furos_deitado)
+        elif 'area2' in request.form:
+            area2 = float(request.form['area2'])
+            resultado_tijolo= defs.tijolo_baiano(area2)
+            return render_template('calculos.html', resultado_tijolo=resultado_tijolo)
+
+    return render_template('calculos.html')
